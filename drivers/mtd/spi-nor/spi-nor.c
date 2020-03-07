@@ -2090,7 +2090,7 @@ static const struct sfdp_bfpt_read sfdp_bfpt_reads[] = {
 	/* Fast Read 1-4-4-DTR */
 	{
 		SNOR_HWCAPS_READ_1_4_4_DTR,
-		BFPT_DWORD(1), BIT(21),	/* Supported bit */
+		BFPT_DWORD(1), BIT(19),	/* Supported bit */
 		BFPT_DWORD(3), 0,	/* Settings */
 		SNOR_PROTO_1_4_4_DTR,
 	},
