@@ -84,8 +84,8 @@
 	bus-width = <4>;
 	max-frequency = <50000000>;
 	no-1-8-v;
-	/*cd-gpios = <&gpio5 3 GPIO_ACTIVE_LOW>;*/
-	non-removable;
+	cd-gpios = <&gpio1 17 GPIO_ACTIVE_LOW>;
+	/*non-removable;*/
 	disable-wp;
 
 	status = "okay";
