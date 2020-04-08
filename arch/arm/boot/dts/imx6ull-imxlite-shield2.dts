@@ -107,7 +107,7 @@
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_wfx0>;
 
-		spi-max-frequency = <42000000>;
+		spi-max-frequency = <5000000>; /* 42000000 MAX */
 
 		reset-gpios = <&gpio2 6 GPIO_ACTIVE_HIGH>;
 		interrupts-extended = <&gpio4 17 IRQ_TYPE_EDGE_RISING>;
