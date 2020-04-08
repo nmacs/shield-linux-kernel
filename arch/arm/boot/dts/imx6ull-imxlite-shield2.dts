@@ -87,8 +87,8 @@
 &ecspi1 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_ecspi1>;
-	fsl,spi-num-chipselects = <1>;
-	cs-gpios = <&gpio4 26 GPIO_ACTIVE_LOW>;
+	fsl,spi-num-chipselects = <2>;
+	cs-gpios = <&gpio4 26 GPIO_ACTIVE_LOW>, <&gpio3 10 GPIO_ACTIVE_LOW>;
 	status = "okay";
 
 	#address-cells = <1>;
@@ -104,6 +104,15 @@
 
 		reset-gpios = <&gpio2 6 GPIO_ACTIVE_HIGH>;
 		interrupts-extended = <&gpio4 17 IRQ_TYPE_EDGE_RISING>;
+	};
+	
+	afe0: afe@1 {
+		compatible = "zixlink,afe";
+		reg = <1>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_afe0>;
+
+		spi-max-frequency = <500000>;
 	};
 };
 
@@ -199,6 +208,7 @@ LTE_ON_10SEC  gpio36  E14 GPIO2_IO4
 			MX6UL_PAD_CSI_DATA06__ECSPI1_MOSI		0xF0B0
 			MX6UL_PAD_CSI_DATA07__ECSPI1_MISO		0xF0B0
 			MX6UL_PAD_CSI_DATA05__GPIO4_IO26		0xF0B0 /* WFX CS */
+			MX6UL_PAD_LCD_DATA05__GPIO3_IO10		0xF0B0 /* AFE CS */
 		>;
 	};
 
@@ -206,6 +216,12 @@ LTE_ON_10SEC  gpio36  E14 GPIO2_IO4
 		fsl,pins = <
 			MX6UL_PAD_ENET1_TX_CLK__GPIO2_IO06		0x30B0 /* WFX RESET */
 			MX6UL_PAD_CSI_MCLK__GPIO4_IO17			0xF0B0 /* WFX IRQ */
+		>;
+	};
+	
+	pinctrl_afe0: afe0grp {
+		fsl,pins = <
+			MX6UL_PAD_ENET1_RX_ER__GPIO2_IO07		0x30B0 /* AFE RESET ACTIVE HIGH */
 		>;
 	};
 
