@@ -2,7 +2,7 @@
 VERSION = 4
 PATCHLEVEL = 19
 SUBLEVEL = 125
-EXTRAVERSION = -shield2-r4
+EXTRAVERSION = -shield2-r5
 NAME = "People's Front"
 
 # *DOCUMENTATION*
