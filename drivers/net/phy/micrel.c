@@ -1656,6 +1656,7 @@ static struct phy_driver ksphy_driver[] = {
 	.read_status	= ksz8081_read_status,
 	.config_intr	= kszphy_config_intr,
 	.handle_interrupt = kszphy_handle_interrupt,
+	.soft_reset	= genphy_soft_reset,
 	.get_sset_count = kszphy_get_sset_count,
 	.get_strings	= kszphy_get_strings,
 	.get_stats	= kszphy_get_stats,
