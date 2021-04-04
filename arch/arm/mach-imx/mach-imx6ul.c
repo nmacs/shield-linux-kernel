@@ -12,6 +12,7 @@
 #include <asm/mach/arch.h>
 #include <asm/mach/map.h>
 
+#include "hardware.h"
 #include "common.h"
 #include "cpuidle.h"
 
@@ -50,9 +51,17 @@ static void __init imx6ul_enet_phy_init(void)
 
 static inline void imx6ul_enet_init(void)
 {
+	const char *ocotp_compat;
+
 	imx6ul_enet_clk_init();
 	imx6ul_enet_phy_init();
-	imx6_enet_mac_init("fsl,imx6ul-fec", "fsl,imx6ul-ocotp");
+
+	if (cpu_is_imx6ull())
+		ocotp_compat = "fsl,imx6ull-ocotp";
+	else
+		ocotp_compat = "fsl,imx6ul-ocotp";
+
+	imx6_enet_mac_init("fsl,imx6ul-fec", ocotp_compat);
 }
 
 static void __init imx6ul_init_machine(void)
