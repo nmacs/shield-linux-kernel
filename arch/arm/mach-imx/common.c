@@ -13,8 +13,12 @@
 #include <linux/of_address.h>
 #include <linux/of_net.h>
 #include <linux/slab.h>
+#include <linux/mfd/syscon.h>
+#include <linux/regmap.h>
+#include <linux/sys_soc.h>
 
 #include "hardware.h"
+#include "common.h"
 
 unsigned long iram_tlb_base_addr;
 unsigned long iram_tlb_phys_addr;
@@ -44,7 +48,7 @@ void restore_ttbr1(unsigned long ttbr1)
 void __init imx6_enet_mac_init(const char *enet_compat, const char *ocotp_compat)
 {
 	struct device_node *ocotp_np, *enet_np, *from = NULL;
-	void __iomem *base;
+	struct regmap *ocotp = NULL;
 	struct property *newmac;
 	u32 macaddr_low;
 	u32 macaddr_high = 0;
@@ -59,30 +63,24 @@ void __init imx6_enet_mac_init(const char *enet_compat, const char *ocotp_compat
 
 		from = enet_np;
 
-		if (!IS_ERR(of_get_mac_address(enet_np)))
+		if (!IS_ERR_OR_NULL(of_get_mac_address(enet_np)))
 			goto put_enet_node;
 
 		id = of_alias_get_id(enet_np, "ethernet");
 		if (id < 0)
 			id = i;
 
-		ocotp_np = of_find_compatible_node(NULL, NULL, ocotp_compat);
-		if (!ocotp_np) {
-			pr_warn("failed to find ocotp node\n");
+		ocotp = syscon_regmap_lookup_by_compatible(ocotp_compat);
+		if (IS_ERR_OR_NULL(ocotp)) {
+			pr_err("%s: failed to find %s regmap!\n", __func__, ocotp_compat);
 			goto put_enet_node;
 		}
 
-		base = of_iomap(ocotp_np, 0);
-		if (!base) {
-			pr_warn("failed to map ocotp\n");
-			goto put_ocotp_node;
-		}
-
-		macaddr_low = readl_relaxed(base + OCOTP_MACn(1));
+		regmap_read(ocotp, OCOTP_MACn(1), &macaddr_low);
 		if (id)
-			macaddr1_high = readl_relaxed(base + OCOTP_MACn(2));
+			regmap_read(ocotp, OCOTP_MACn(2), &macaddr1_high);
 		else
-			macaddr_high = readl_relaxed(base + OCOTP_MACn(0));
+			regmap_read(ocotp, OCOTP_MACn(0), &macaddr_high);
 
 		newmac = kzalloc(sizeof(*newmac) + 6, GFP_KERNEL);
 		if (!newmac)
