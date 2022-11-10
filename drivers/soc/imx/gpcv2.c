@@ -514,6 +514,11 @@ static int imx_pgc_domain_probe(struct platform_device *pdev)
 		imx_pgc_put_clocks(domain);
 	}
 
+	return 0;
+
+out_genpd_remove:
+	pm_genpd_remove(&domain->genpd);
+
 	return ret;
 }
 
