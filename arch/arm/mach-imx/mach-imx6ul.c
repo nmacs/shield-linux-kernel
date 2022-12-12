@@ -73,7 +73,7 @@ static void __init imx6ul_init_late(void)
 static void __init imx6ul_map_io(void)
 {
 	imx6_pm_map_io();
-	imx_busfreq_map_io();
+	//imx_busfreq_map_io();
 }
 
 static const char * const imx6ul_dt_compat[] __initconst = {
