@@ -2,7 +2,7 @@
 VERSION = 5
 PATCHLEVEL = 4
 SUBLEVEL = 110
-EXTRAVERSION = -shield-2.1-r4
+EXTRAVERSION = -shield-2.2-r5
 NAME = Kleptomaniac Octopus
 
 # *DOCUMENTATION*
