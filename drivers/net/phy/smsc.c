@@ -80,7 +80,7 @@ static int smsc_phy_reset(struct phy_device *phydev)
 
 	/* Set SMSC PHY in all capable mode before using it.
 	 */
-	if ((rc & MII_LAN83C185_MODE_MASK) == MII_LAN83C185_MODE_ALL) {
+	if ((rc & MII_LAN83C185_MODE_MASK) != MII_LAN83C185_MODE_ALL) {
 		/* set "all capable" mode */
 		rc |= MII_LAN83C185_MODE_ALL;
 		phy_write(phydev, MII_LAN83C185_SPECIAL_MODES, rc);
