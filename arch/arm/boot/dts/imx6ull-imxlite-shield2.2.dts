@@ -69,6 +69,7 @@
 	/*pinctrl-0 = <&pinctrl_enet1>;*/
 	phy-mode = "rmii";
 	phy-handle = <&ethphy1>;
+	phy-reset-gpios = <&gpio4 3 GPIO_ACTIVE_LOW>;
 	status = "okay";
 };
 
@@ -77,6 +78,7 @@
 	/*pinctrl-0 = <&pinctrl_enet2>;*/
 	phy-mode = "rmii";
 	phy-handle = <&ethphy2>;
+	phy-reset-gpios = <&gpio3 1 GPIO_ACTIVE_LOW>;
 	status = "okay";
 
 	mdio {
