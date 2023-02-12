@@ -78,9 +78,10 @@ static int smsc_phy_reset(struct phy_device *phydev)
 	if (rc < 0)
 		return rc;
 
-	/* Set SMSC PHY in all capable mode before using it.
+	/* If the SMSC PHY is in power down mode, then set it
+	 * in all capable mode before using it.
 	 */
-	if ((rc & MII_LAN83C185_MODE_MASK) != MII_LAN83C185_MODE_ALL) {
+	if ((rc & MII_LAN83C185_MODE_MASK) == MII_LAN83C185_MODE_POWERDOWN) {
 		/* set "all capable" mode */
 		rc |= MII_LAN83C185_MODE_ALL;
 		phy_write(phydev, MII_LAN83C185_SPECIAL_MODES, rc);
